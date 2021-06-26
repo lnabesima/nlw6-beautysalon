@@ -18,10 +18,10 @@ for (const link of links){
 }
 
 /*add shadow to header when scroll*/
-function changeHeaderWhenScroll() {
-    const header = document.querySelector('#header');
-    const navHeight = header.offsetHeight;
+const header = document.querySelector('#header');
+const navHeight = header.offsetHeight;
 
+function changeHeaderWhenScroll() {
     if(window.scrollY >= navHeight){
         //if scroll is bigger than the height of the navbar
         header.classList.add('scroll')
@@ -68,8 +68,9 @@ scrollreveal.reveal(
 )
 
 /*Back to top Button*/
+const backToTopBtn = document.querySelector('.back-to-top');
+
 function backToTop() {
-    const backToTopBtn = document.querySelector('.back-to-top');
     if(window.scrollY >= 560) {
         backToTopBtn.classList.add('show');
     } else {
@@ -77,10 +78,35 @@ function backToTop() {
     }
 }
 
+/* Highlight menu link with the current section */
+const sections = document.querySelectorAll('section[id]')
+function activateMenuAtCurrentSection() {
+    const checkpoint = window.pageYOffset + (window.innerHeight / 8) * 4;
+    for(const section of sections){
+        const sectionTop = section.offsetTop;
+        const sectionHeight = section.offsetHeight;
+        const sectionId = section.getAttribute('id');
+
+        const checkpointStart = checkpoint >= sectionTop;
+        const checkpointEnd = checkpoint <= sectionTop + sectionHeight;
+
+        if (checkpointStart && checkpointEnd) {
+            document
+                .querySelector('nav ul li a[href*=' + sectionId + ']')
+                .classList.add('active')
+        } else {
+            document
+                .querySelector('nav ul li a[href*=' + sectionId + ']')
+                .classList.remove('active')
+        }
+    }
+}
+
+
 /* When Scroll */
-
 window.addEventListener('scroll', function(){
-
-    backToTop()
     changeHeaderWhenScroll()
-})
+    backToTop()
+    activateMenuAtCurrentSection()
+}
+)
