@@ -18,10 +18,10 @@ for (const link of links){
 }
 
 /*add shadow to header when scroll*/
-const header = document.querySelector('#header');
-const navHeight = header.offsetHeight;
+function changeHeaderWhenScroll() {
+    const header = document.querySelector('#header');
+    const navHeight = header.offsetHeight;
 
-window.addEventListener('scroll', function(){
     if(window.scrollY >= navHeight){
         //if scroll is bigger than the height of the navbar
         header.classList.add('scroll')
@@ -29,7 +29,8 @@ window.addEventListener('scroll', function(){
         //if scroll is smaller than the height of the navbar
         header.classList.remove('scroll')
     }
-})
+}
+
 
 /*testimonial carousel using swiper*/
 const swiper = new Swiper('.swiper-container', {
@@ -54,6 +55,25 @@ scrollreveal.reveal(
     #about .image, #about .text,
     #services header, #services .card,
     #testimonials header, #testimonials .testimonials,
-    #contact .text, #contact .links`,
+    #contact .text, #contact .links,
+    footer .brand, footer .social`,
     {interval: 100}
 )
+
+/*Back to top Button*/
+function backToTop() {
+    const backToTopBtn = document.querySelector('.back-to-top');
+    if(window.scrollY >= 560) {
+        backToTopBtn.classList.add('show');
+    } else {
+        backToTopBtn.classList.remove('show');
+    }
+}
+
+/* When Scroll */
+
+window.addEventListener('scroll', function(){
+
+    backToTop()
+    changeHeaderWhenScroll()
+})
